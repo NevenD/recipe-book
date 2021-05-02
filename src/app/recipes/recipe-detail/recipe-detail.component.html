@@ -15,24 +15,18 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div class="dropdown">
-      <button
-        class="btn btn-primary dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        Dropdown button
+    <div class="btn-group" appDropdown>
+      <button type="button" class="btn btn-primary dropdown-toggle">
+        Dropdown menu<span class="caret"></span>
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">To shopping list</a>
-        <a class="dropdown-item" href="#">Edit recipe</a>
-        <a class="dropdown-item" href="#">Delete recipe</a>
-      </div>
+      <ul class="dropdown-menu">
+        <li class="dropdown-item"><a href="#">Item One</a></li>
+        <li class="dropdown-item"><a href="#">Item Two</a></li>
+        <li class="dropdown-item"><a href="#">Item Three</a></li>
+      </ul>
     </div>
   </div>
+  <br />
 </div>
 <div class="row">
   <div class="col-md-12">{{ recipe.Description }}</div>
