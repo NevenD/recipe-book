@@ -16,8 +16,6 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipeService.recipeSelected.subscribe((recipe: Recipe) => {
-      // tslint:disable-next-line:no-console
-      console.log(recipe);
       this.selectedRecipe = recipe;
     });
   }
