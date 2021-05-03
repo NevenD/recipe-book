@@ -4,7 +4,7 @@
       [src]="recipe.ImagePath"
       [alt]="recipe.Name"
       class="image-responsive"
-      style="max-width: 150px"
+      style="max-width: 250px"
     />
   </div>
 </div>
@@ -15,15 +15,22 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div class="btn-group" appDropdown>
-      <button type="button" class="btn btn-primary dropdown-toggle">
-        Dropdown menu<span class="caret"></span>
+    <div class="dropdown" appDropdown aria-labelledby="dropdownMenuButton">
+      <button
+        class="btn btn-primary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Dropdown button
       </button>
-      <ul class="dropdown-menu">
-        <li class="dropdown-item"><a href="#">Item One</a></li>
-        <li class="dropdown-item"><a href="#">Item Two</a></li>
-        <li class="dropdown-item"><a href="#">Item Three</a></li>
-      </ul>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">To shopping list</a>
+        <a class="dropdown-item" href="#">Edit recipe</a>
+        <a class="dropdown-item" href="#">Delete recipe</a>
+      </div>
     </div>
   </div>
   <br />
