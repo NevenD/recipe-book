@@ -17,20 +17,17 @@
     id="navbarSupportedContent"
   >
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="onSelect('recipe')">Recipes</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/recipes">Recipes</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="onSelect('shoppingList')"
-          >Shopping List</a
-        >
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown" appDropdown>
         <a
           class="nav-link dropdown-toggle"
-          href="#"
           id="navbarDropdown"
           role="button"
           data-toggle="dropdown"
@@ -40,8 +37,8 @@
           Dropdown menu
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Save data</a>
-          <a class="dropdown-item" href="#">Fetch data</a>
+          <a class="dropdown-item" style="cursor: pointer">Save data</a>
+          <a class="dropdown-item" style="cursor: pointer">Fetch data</a>
         </div>
       </li>
     </ul>
