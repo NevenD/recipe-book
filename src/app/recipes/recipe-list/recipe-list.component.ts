@@ -18,6 +18,11 @@ export class RecipeListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+      // tslint:disable-next-line:no-console
+      console.log(recipes);
+      this.recipes = recipes;
+    });
     this.recipes = this.recipeService.getRecipes();
   }
 

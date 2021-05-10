@@ -5,14 +5,14 @@
   class="list-group-item list-group-item-action"
 >
   <div class="d-flex w-100 justify-content-between">
-    <h5 class="mb-1">{{ recipe.Name }}</h5>
+    <h5 class="mb-1">{{ recipe.name }}</h5>
     <small>3 days ago</small>
   </div>
-  <p class="mb-1">{{ recipe.Description }}</p>
+  <p class="mb-1">{{ recipe.description }}</p>
   <img
-    [src]="recipe.ImagePath"
+    [src]="recipe.imagePath"
     class="rounded-circle"
-    alt="{{ recipe.Name }}"
+    alt="{{ recipe.name }}"
     style="max-height: 100px; max-width: 100px"
   />
 </a>
