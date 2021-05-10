@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-12">
     <img
-      [src]="recipe.ImagePath"
-      [alt]="recipe.Name"
+      [src]="recipe.imagePath"
+      [alt]="recipe.name"
       class="image-responsive"
       style="max-width: 250px"
     />
@@ -10,7 +10,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h2>{{ recipe.Name }}</h2>
+    <h2>{{ recipe.name }}</h2>
   </div>
 </div>
 <div class="row">
@@ -39,20 +39,25 @@
           (click)="onEditRecipe()"
           >Edit recipe</a
         >
-        <a class="dropdown-item" style="cursor: pointer">Delete recipe</a>
+        <a
+          class="dropdown-item"
+          style="cursor: pointer"
+          (click)="onDeleteRecipe()"
+          >Delete recipe</a
+        >
       </div>
     </div>
   </div>
   <br />
 </div>
 <div class="row">
-  <div class="col-md-12">{{ recipe.Description }}</div>
+  <div class="col-md-12">{{ recipe.description }}</div>
 </div>
 <div class="row">
   <div class="col-xs-12">
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let ingredient of recipe.Ingredients">
-        {{ ingredient.Name }} - {{ ingredient.Amount }}
+      <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
+        {{ ingredient.name }} - {{ ingredient.amount }}
       </li>
     </ul>
   </div>

@@ -21,18 +21,24 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      // tslint:disable-next-line:no-console
-      console.log(params);
       this.id = +params.id;
       this.recipe = this.recipeService.getRecipe(this.id);
+
+      // tslint:disable-next-line:no-console
+      console.log(this.recipe);
     });
   }
 
   onAddToShoppingList(): void {
-    this.recipeService.addIngredientsToShoppingList(this.recipe.Ingredients);
+    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
   }
 
   onEditRecipe(): void {
     this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+
+  onDeleteRecipe(): void {
+    this.recipeService.deleteRecipe(this.id);
+    this.router.navigate(['/recipes']);
   }
 }
