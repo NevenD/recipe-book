@@ -17,10 +17,10 @@
     id="navbarSupportedContent"
   >
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active" *ngIf="isAuth">
         <a class="nav-link" routerLink="/recipes">Recipes</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active" *ngIf="!isAuth">
         <a class="nav-link" routerLink="/auth">Authenticate</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
@@ -28,7 +28,7 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown" appDropdown>
+      <li class="nav-item dropdown" appDropdown *ngIf="isAuth">
         <a
           class="nav-link dropdown-toggle"
           id="navbarDropdown"
@@ -40,6 +40,9 @@
           Manage data
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" style="cursor: pointer" (click)="onLogout()"
+            >Logout</a
+          >
           <a
             class="dropdown-item"
             style="cursor: pointer"
