@@ -1,23 +1,43 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })
-export class AuthComponent {
+export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error = null;
+  private closeSub: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  @ViewChild(PlaceholderDirective, { static: false })
+  alertHost: PlaceholderDirective;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private componentFactory: ComponentFactoryResolver
+  ) {}
+
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   onSwitch(): void {
-    this.isLoginMode = !this.isLoginMode;
+    if (this.closeSub) {
+      this.closeSub.unsubscribe();
+    }
   }
 
   onSubmit(form: NgForm): void {
@@ -44,9 +64,34 @@ export class AuthComponent {
       },
       (errorMessage) => {
         this.error = errorMessage;
+        this.showErrorAlert(errorMessage);
         this.isLoading = false;
       }
     );
     form.reset();
+  }
+
+  onHandleError(): void {
+    this.error = null;
+  }
+
+  // ako želimo dodati kroz typscript dinamičku komponentu onda moramo
+  // registrirati unutar app.module pod property entryComponents
+  private showErrorAlert(message: string): void {
+    const alertFactory = this.componentFactory.resolveComponentFactory(
+      AlertComponent
+    );
+
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+    // brišemo i čistimo sve za svaki slučaj da je nešto ostalo
+    hostViewContainerRef.clear();
+    // izrađujemo komponentu
+    const componentRef = hostViewContainerRef.createComponent(alertFactory);
+    // pristupamo propertijama kroz instancu
+    componentRef.instance.message = message;
+    this.closeSub = componentRef.instance.closeModal.subscribe(() => {
+      this.closeSub.unsubscribe();
+      hostViewContainerRef.clear();
+    });
   }
 }
