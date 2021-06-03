@@ -7,7 +7,7 @@
         class="list-group-item list-group-item-action"
         aria-current="true"
         style="cursor: pointer"
-        *ngFor="let ingred of ingredients; let i = index"
+        *ngFor="let ingred of (ingredients | async).ingredients; let i = index"
         (click)="onEditItem(i)"
       >
         {{ ingred.name }} ({{ ingred.amount }})

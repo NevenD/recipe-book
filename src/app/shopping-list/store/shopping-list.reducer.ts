@@ -7,7 +7,7 @@ const initialState = {
 
 export function shoppingListReducer(
   state = initialState,
-  action: ShoppingListActions.AddIngredient
+  action: ShoppingListActions.ShoppingListActions
 ): any {
   switch (action.type) {
     // naziv akcije
@@ -17,5 +17,13 @@ export function shoppingListReducer(
         // koristimo spread operator da izvucemo  elemente/ objekte iz arraya
         ingredients: [...state.ingredients, action.payload],
       };
+    case ShoppingListActions.ADD_INGREDIENTS:
+      // console.log(action.payload);
+      return {
+        ...state,
+        ingredients: [...state.ingredients, ...action.payload], // koristimo spread operator koji će izvuci elemente iz arraya
+      };
+    default:
+      return state;
   }
 }

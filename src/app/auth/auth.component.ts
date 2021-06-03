@@ -1,9 +1,4 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -15,7 +10,7 @@ import { AuthResponseData, AuthService } from './auth.service';
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })
-export class AuthComponent implements OnDestroy {
+export class AuthComponent {
   isLoginMode = true;
   isLoading = false;
   error = null;
@@ -30,11 +25,8 @@ export class AuthComponent implements OnDestroy {
     private componentFactory: ComponentFactoryResolver
   ) {}
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
-
   onSwitch(): void {
+    this.isLoginMode = !this.isLoginMode;
     if (this.closeSub) {
       this.closeSub.unsubscribe();
     }

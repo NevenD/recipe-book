@@ -27,6 +27,8 @@ export class AuthGuard implements CanActivate {
       // uzimamo samo jednog da nemamo ongoing listener i memory leak
       take(1),
       map((user) => {
+        // tslint:disable-next-line:no-console
+        console.log(user);
         const isAuth = !!user;
 
         if (isAuth) {
