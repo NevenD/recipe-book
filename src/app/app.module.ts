@@ -8,9 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from './shared/alert/alert.component';
 import { CoreModule } from './core.module';
 import { StoreModule } from '@ngrx/store';
-import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -19,7 +19,7 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     AppRoutingModule,
     SharedModule,
-    StoreModule.forRoot({ shoppingList: shoppingListReducer }),
+    StoreModule.forRoot(fromApp.appReducer),
     ReactiveFormsModule,
     HttpClientModule,
   ],
