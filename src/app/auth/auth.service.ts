@@ -21,7 +21,7 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  // user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   token: string = null;
@@ -86,7 +86,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.user.next(null);
+    // this.user.next(null);
     this.store.dispatch(new AuthActions.Logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
