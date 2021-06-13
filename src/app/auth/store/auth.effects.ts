@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { User } from '../user.model';
 import * as AuthActions from './auth.actions';
 
 export interface AuthResponseData {
@@ -25,6 +26,8 @@ const handleAuthentication = (
   token: string
 ) => {
   const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
+  const user = new User(email, userId, token, expirationDate);
+  localStorage.setItem('userData', JSON.stringify(user));
   return new AuthActions.Login({
     email,
     userId,
@@ -120,9 +123,50 @@ export class AuthEffects {
     })
   );
 
+  @Effect()
+  autoLogin = this.actions$.pipe(
+    ofType(AuthActions.AUTO_LOGIN),
+    map(() => {
+      const userData = JSON.parse(localStorage.getItem('userData')) as User;
+      if (!userData) {
+        return { type: 'DUMMY' };
+      }
+
+      const loadedUser = new User(
+        userData.email,
+        userData.id,
+        userData.tokenValue,
+        new Date(userData.tokenExpirationDateValue)
+      );
+
+      if (loadedUser.tokenValue) {
+        // this.user.next(loadedUser);
+        return new AuthActions.Login({
+          email: loadedUser.email,
+          userId: loadedUser.id,
+          token: loadedUser.tokenValue,
+          expirationDate: new Date(userData.tokenExpirationDateValue),
+        });
+        // const expirationDuration =
+        //   new Date(userData.tokenExpirationDateValue).getTime() -
+        //   new Date().getTime();
+        // this.autoLogout(expirationDuration);
+      }
+      return { type: 'DUMMY' };
+    })
+  );
+
+  @Effect({ dispatch: false })
+  authLogout = this.actions$.pipe(
+    ofType(AuthActions.LOGOUT),
+    tap(() => {
+      localStorage.removeItem('userData');
+    })
+  );
+
   @Effect({ dispatch: false })
   authSuccess = this.actions$.pipe(
-    ofType(AuthActions.LOGIN),
+    ofType(AuthActions.LOGIN, AuthActions.LOGOUT),
     tap(() => {
       this.router.navigate(['/']);
     })

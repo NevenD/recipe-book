@@ -1,6 +1,7 @@
 import {
   Component,
   ComponentFactoryResolver,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -18,11 +19,12 @@ import * as AuthActions from './store/auth.actions';
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error = null;
   private closeSub: Subscription;
+  private storeSub: Subscription;
 
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost: PlaceholderDirective;
@@ -33,9 +35,12 @@ export class AuthComponent implements OnInit {
     private componentFactory: ComponentFactoryResolver,
     private store: Store<fromApp.AppState>
   ) {}
+  ngOnDestroy(): void {
+    this.storeSub.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.store.select('auth').subscribe((authState) => {
+    this.storeSub = this.store.select('auth').subscribe((authState) => {
       this.isLoading = authState.loading;
       this.error = authState.authError;
       if (this.error) {
@@ -85,7 +90,7 @@ export class AuthComponent implements OnInit {
   }
 
   onHandleError(): void {
-    this.error = null;
+    this.store.dispatch(new AuthActions.ClearError());
   }
 
   // ako želimo dodati kroz typscript dinamičku komponentu onda moramo
